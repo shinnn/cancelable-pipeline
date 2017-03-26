@@ -1,6 +1,6 @@
 {
   "name": "cancelable-pump",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cancelable `pump`",
   "repository": "shinnn/cancelable-pump",
   "author": "Shinnosuke Watanabe (https://github.com/shinnn)",
