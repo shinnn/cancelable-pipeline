@@ -1,7 +1,3 @@
-/*!
- * cancelable-pump | MIT (c) Shinnosuke Watanabe
- * https://github.com/shinnn/cancelable-pump
-*/
 'use strict';
 
 const pump = require('pump');

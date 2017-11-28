@@ -1,6 +1,6 @@
 # cancelable-pump
 
-[![NPM version](https://img.shields.io/npm/v/cancelable-pump.svg)](https://www.npmjs.com/package/cancelable-pump)
+[![npm version](https://img.shields.io/npm/v/cancelable-pump.svg)](https://www.npmjs.com/package/cancelable-pump)
 [![Build Status](https://travis-ci.org/shinnn/cancelable-pump.svg?branch=master)](https://travis-ci.org/shinnn/cancelable-pump)
 [![Coverage Status](https://img.shields.io/coveralls/shinnn/cancelable-pump.svg)](https://coveralls.io/github/shinnn/cancelable-pump?branch=master)
 
@@ -25,7 +25,7 @@ setTimeout(() => {
 
 ## Installation
 
-[Use npm.](https://docs.npmjs.com/cli/install)
+[Use](https://docs.npmjs.com/cli/install) [npm](https://docs.npmjs.com/getting-started/what-is-npm).
 
 ```
 npm install cancelable-pump
@@ -45,7 +45,7 @@ Return: `Function`
 
 ### cancelablePump(*streams* [, *callback*])
 
-*streams*: `Array` of `Stream`s  
+*streams*: `Array<Stream>`  
 *callback*: `Function`  
 Return: `Function`
 
@@ -61,6 +61,4 @@ cancel();
 
 ## License
 
-Copyright (c) 2017 [Shinnosuke Watanabe](https://github.com/shinnn)
-
-Licensed under [the MIT License](./LICENSE).
+[ISC License](./LICENSE) © 2017 Shinnosuke Watanabe
