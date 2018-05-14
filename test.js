@@ -36,8 +36,14 @@ test('cancelablePump()', t => {
 test('Argument validation', t => {
 	t.throws(
 		() => cancelablePump(),
-		/^RangeError: cancelable-pump requires more than 2 streams, but got 0\.$/,
+		/^RangeError: Expected at least 1 argument, but got no arguments\.$/,
 		'should throw an error when it takes no arguments.'
+	);
+
+	t.throws(
+		() => cancelablePump([]),
+		/^RangeError: cancelable-pump requires more than 2 streams, but got 0\.$/,
+		'should throw an error when it takes no streams.'
 	);
 
 	t.throws(
