@@ -1,21 +1,21 @@
 # cancelable-pump
 
 [![npm version](https://img.shields.io/npm/v/cancelable-pump.svg)](https://www.npmjs.com/package/cancelable-pump)
-[![Build Status](https://travis-ci.org/shinnn/cancelable-pump.svg?branch=master)](https://travis-ci.org/shinnn/cancelable-pump)
+[![Build Status](https://travis-ci.com/shinnn/cancelable-pump.svg?branch=master)](https://travis-ci.com/shinnn/cancelable-pump)
 [![Coverage Status](https://img.shields.io/coveralls/shinnn/cancelable-pump.svg)](https://coveralls.io/github/shinnn/cancelable-pump?branch=master)
 
 Cancelable [`pump`](https://github.com/mafintosh/pump)
 
 ```javascript
-const {createReadStream, createWriteStream} = require('cancelable-pump');
+const {createReadStream, createWriteStream, promises: {stat}} = require('fs');
 const cancelablePump = require('cancelable-pump');
 
-cancelablePump(createReadStream('1GB-file.txt'), createWriteStream('dest0'), () => {
-  statSync('dest0').size; //=> 1000000000;
+cancelablePump(createReadStream('1GB-file.txt'), createWriteStream('dest0'), async () => {
+  (await stat('dest0')).size; //=> 1000000000;
 });
 
-const cancel = cancelablePump(createReadStream('1GB-file.txt'), createWriteStream('dest1'), () => {
-  statSync('dest1').size; //=> 263192576, or something else smaller than 1000000000
+const cancel = cancelablePump(createReadStream('1GB-file.txt'), createWriteStream('dest1'), async () => {
+  (await stat('dest1')).size; //=> 263192576, or something else smaller than 1000000000
 });
 
 setTimeout(() => {
@@ -25,7 +25,7 @@ setTimeout(() => {
 
 ## Installation
 
-[Use](https://docs.npmjs.com/cli/install) [npm](https://docs.npmjs.com/getting-started/what-is-npm).
+[Use](https://docs.npmjs.com/cli/install) [npm](https://docs.npmjs.com/about-npm/).
 
 ```
 npm install cancelable-pump
