@@ -1,40 +1,43 @@
 {
 	"name": "cancelable-pump",
 	"version": "0.4.0",
-	"description": "Cancelable `pump`",
+	"description": "Cancelable `stream.pipeline()`",
 	"repository": "shinnn/cancelable-pump",
 	"author": "Shinnosuke Watanabe (https://github.com/shinnn)",
 	"scripts": {
-		"pretest": "eslint --fix --format=codeframe index.js test.js",
-		"test": "nyc --reporter=html --reporter=text node test.js"
+		"pretest": "eslint .",
+		"test": "nyc node test.js"
 	},
 	"license": "ISC",
 	"files": [
 		"index.js"
 	],
 	"keywords": [
-		"pump",
-		"stream",
+		"pipeline",
 		"pipe",
+		"stream",
+		"streams",
 		"join",
 		"chain",
 		"cancel",
+		"cancelable",
 		"cancellation",
 		"abort",
 		"stop",
 		"destroy",
 		"callback"
 	],
-	"dependencies": {
-		"pump": "^3.0.0"
-	},
 	"devDependencies": {
-		"@shinnn/eslint-config-node": "^5.0.0",
-		"eslint": "^4.19.1",
-		"nyc": "^11.7.3",
-		"tape": "^4.9.0"
+		"@shinnn/eslint-config": "^6.10.0",
+		"eslint": "^5.16.0",
+		"nyc": "^13.3.0",
+		"nyc-config-common": "^1.0.1",
+		"tape": "^4.10.1"
 	},
 	"eslintConfig": {
-		"extends": "@shinnn/node"
+		"extends": "@shinnn"
+	},
+	"nyc": {
+		"extends": "nyc-config-common"
 	}
 }

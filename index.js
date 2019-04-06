@@ -1,10 +1,10 @@
 'use strict';
 
-const pump = require('pump');
+const {pipeline} = require('stream');
 
 const cancel = new Error('Canceled.');
 
-module.exports = function cancelablePump(...args) {
+module.exports = function cancelablePipeline(...args) {
 	if (args.length === 0) {
 		throw new RangeError('Expected at least 1 argument, but got no arguments.');
 	}
@@ -18,10 +18,10 @@ module.exports = function cancelablePump(...args) {
 	const streamCount = streams.length;
 
 	if (streamCount < 2) {
-		throw new RangeError(`cancelable-pump requires more than 2 streams, but got ${streamCount}.`);
+		throw new RangeError(`cancelable-pipeline requires more than 2 streams, but got ${streamCount}.`);
 	}
 
-	pump(streams, err => {
+	pipeline(streams, err => {
 		if (!callback) {
 			return;
 		}
@@ -38,4 +38,3 @@ module.exports = function cancelablePump(...args) {
 		streams[streamCount - 1].emit('error', cancel);
 	};
 };
-

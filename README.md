@@ -2,25 +2,23 @@
 
 [![npm version](https://img.shields.io/npm/v/cancelable-pump.svg)](https://www.npmjs.com/package/cancelable-pump)
 [![Build Status](https://travis-ci.com/shinnn/cancelable-pump.svg?branch=master)](https://travis-ci.com/shinnn/cancelable-pump)
-[![Coverage Status](https://img.shields.io/coveralls/shinnn/cancelable-pump.svg)](https://coveralls.io/github/shinnn/cancelable-pump?branch=master)
+[![codecov](https://codecov.io/gh/shinnn/cancelable-pump/branch/master/graph/badge.svg)](https://codecov.io/gh/shinnn/cancelable-pump)
 
-Cancelable [`pump`](https://github.com/mafintosh/pump)
+Cancelable [`stream.pipeline()`](https://nodejs.org/api/stream.html#stream_stream_pipeline_streams_callback)
 
 ```javascript
 const {createReadStream, createWriteStream, promises: {stat}} = require('fs');
-const cancelablePump = require('cancelable-pump');
+const cancelablePipeline = require('cancelable-pump');
 
-cancelablePump(createReadStream('1GB-file.txt'), createWriteStream('dest0'), async () => {
+cancelablePipeline(createReadStream('1GB-file.txt'), createWriteStream('dest0'), async () => {
   (await stat('dest0')).size; //=> 1000000000;
 });
 
-const cancel = cancelablePump(createReadStream('1GB-file.txt'), createWriteStream('dest1'), async () => {
+const cancel = cancelablePipeline(createReadStream('1GB-file.txt'), createWriteStream('dest1'), async () => {
   (await stat('dest1')).size; //=> 263192576, or something else smaller than 1000000000
 });
 
-setTimeout(() => {
-  cancel();
-}, 1000);
+setTimeout(() => cancel(), 1000);
 ```
 
 ## Installation
@@ -34,22 +32,22 @@ npm install cancelable-pump
 ## API
 
 ```javascript
-const cancelablePump = require('cancelable-pump');
+const cancelablePipeline = require('cancelable-pump');
 ```
 
-### cancelablePump(*stream0* [, *stream1*, *stream2*, ...] [, *callback*])
+### cancelablePipeline(*stream0* [, *stream1*, *stream2*, ...] [, *callback*])
 
 *stream0*, *stream1*, *stream2*, ...: [`Stream`](https://nodejs.org/api/stream.html#stream_stream)  
 *callback*: `Function`  
 Return: `Function`
 
-### cancelablePump(*streams* [, *callback*])
+### cancelablePipeline(*streams* [, *callback*])
 
-*streams*: `Array<Stream>`  
+*streams*: `Stream[]`  
 *callback*: `Function`  
 Return: `Function`
 
-The API is almost the same as `pump`'s. The only difference is *cancelable-pump* returns a function to destroy all streams without passing any errors to the callback.
+The API is almost the same as [`stream.pipeline()`](https://nodejs.org/api/stream.html#stream_stream_pipeline_streams_callback). The only difference is *cancelable-pump* returns a `Function` which destroys all the piped `Stream`s without passing any errors to the callback.
 
 ```javascript
 const cancel = cancelablePump([src, transform, anotherTransform, dest], err => {
@@ -61,4 +59,4 @@ cancel();
 
 ## License
 
-[ISC License](./LICENSE) © 2017 - 2018 Shinnosuke Watanabe
+[ISC License](./LICENSE) © 2017 - 2019 Shinnosuke Watanabe

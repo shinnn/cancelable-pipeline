@@ -2,59 +2,59 @@
 
 const {PassThrough} = require('stream');
 
-const cancelablePump = require('.');
+const cancelablePipeline = require('.');
 const test = require('tape');
 
-test('cancelablePump()', t => {
+test('cancelablePipeline()', t => {
 	t.plan(3);
 
 	t.doesNotThrow(
-		() => cancelablePump([new PassThrough(), new PassThrough()])(),
+		() => cancelablePipeline([new PassThrough(), new PassThrough()])(),
 		'should return a function.'
 	);
 
-	const cancel = cancelablePump(new PassThrough(), new PassThrough(), err => {
+	const cancel = cancelablePipeline(new PassThrough(), new PassThrough(), (...args) => {
 		t.equal(
-			err,
-			undefined,
+			args.length,
+			0,
 			'should cancel all streams when the cancellation function is called.'
 		);
 	});
 
 	cancel();
 
-	const dest1 = new PassThrough();
+	const dest = new PassThrough();
 	const error = new Error();
 
-	cancelablePump(new PassThrough(), dest1, err => {
+	cancelablePipeline(new PassThrough(), dest, err => {
 		t.equal(err, error, 'should pass normal errors as it is.');
 	});
 
-	dest1.emit('error', error);
+	dest.destroy(error);
 });
 
 test('Argument validation', t => {
 	t.throws(
-		() => cancelablePump(),
-		/^RangeError: Expected at least 1 argument, but got no arguments\.$/,
+		() => cancelablePipeline(),
+		/^RangeError: Expected at least 1 argument, but got no arguments\.$/u,
 		'should throw an error when it takes no arguments.'
 	);
 
 	t.throws(
-		() => cancelablePump([]),
-		/^RangeError: cancelable-pump requires more than 2 streams, but got 0\.$/,
+		() => cancelablePipeline([]),
+		/^RangeError: cancelable-pipeline requires more than 2 streams, but got 0\.$/u,
 		'should throw an error when it takes no streams.'
 	);
 
 	t.throws(
-		() => cancelablePump(new PassThrough()),
-		/^RangeError: cancelable-pump requires more than 2 streams, but got 1\.$/,
+		() => cancelablePipeline(new PassThrough()),
+		/^RangeError: cancelable-pipeline requires more than 2 streams, but got 1\.$/u,
 		'should throw an error when it takes only 1 argument.'
 	);
 
 	t.throws(
-		() => cancelablePump(new PassThrough(), t.fail),
-		/^RangeError: cancelable-pump requires more than 2 streams, but got 1\.$/,
+		() => cancelablePipeline(new PassThrough(), t.fail),
+		/^RangeError: cancelable-pipeline requires more than 2 streams, but got 1\.$/u,
 		'should throw an error when the arguments include less than 2 streams.'
 	);
 
