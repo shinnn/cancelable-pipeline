@@ -1,14 +1,14 @@
 {
-	"name": "cancelable-pump",
+	"name": "cancelable-pipeline",
 	"version": "0.4.0",
 	"description": "Cancelable `stream.pipeline()`",
-	"repository": "shinnn/cancelable-pump",
 	"author": "Shinnosuke Watanabe (https://github.com/shinnn)",
+	"repository": "shinnn/cancelable-pipeline",
+	"license": "ISC",
 	"scripts": {
 		"pretest": "eslint .",
 		"test": "nyc node test.js"
 	},
-	"license": "ISC",
 	"files": [
 		"index.js"
 	],
